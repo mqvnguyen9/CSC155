@@ -4,15 +4,15 @@ import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
 class ColorCommand extends AbstractAction {
-    private final Starter starter;
+    private final StarterModel starterModel;
 
-    public ColorCommand(Starter starter) {
-        this.starter = starter;
+    public ColorCommand(StarterModel starterModel) {
+        this.starterModel = starterModel;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        int result = (starter.isGradient() + 1) % 2;
-        starter.setGradient(result);
+        int result = (starterModel.isGradient() + 1) % 2;
+        starterModel.setGradient(result);
 
     }
 }

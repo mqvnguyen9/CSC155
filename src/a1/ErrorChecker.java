@@ -53,4 +53,15 @@ class ErrorChecker {
         }
         return foundError;
     }
+    public static void displaySystemInfo() {
+        GL4 gl = (GL4) GLContext.getCurrentGL();
+        System.out.println("Open GL Info:");
+        System.out.println(gl.glGetString(gl.GL_VERSION));
+        System.out.println(gl.glGetString(gl.GL_VENDOR));
+        System.out.println(gl.glGetString(gl.GL_RENDERER) + "\n");
+        System.out.println("JOGL Info:");
+        System.out.println(Package.getPackage("com.jogamp.opengl").getImplementationVersion() + "\n");
+        System.out.println("Java Version:");
+        System.out.println(System.getProperty("java.version") + "\n");
+    }
 }
