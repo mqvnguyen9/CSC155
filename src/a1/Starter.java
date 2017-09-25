@@ -219,10 +219,6 @@ class Starter extends JFrame implements GLEventListener, MouseWheelListener {
         actionMap.put("color", colorCommand);
     }
 
-    private void testMethod() {
-
-    }
-
     private void addButtonListeners() {
         verticalMovement.addActionListener(e -> {
             isVerticalMovement = !isVerticalMovement;
