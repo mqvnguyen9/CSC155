@@ -3,6 +3,10 @@ package a1;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
+/*
+This class allows users to press the letter 'c' to change the color of the triangle from a solid color to a gradient of
+three colors.
+ */
 class ColorCommand extends AbstractAction {
     private final StarterModel starterModel;
 
