@@ -1,10 +1,22 @@
 package a1;
 
+/*
+Michael Nguyen
+CSC 155
+Assignment 1
+ */
+
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLContext;
 import com.jogamp.opengl.glu.GLU;
 
+/*
+This is a static utility class that prints various types of information to the console. Can be useful to determine there
+was a program somewhere along the process of creating and linking the shaders. Also has a method to display system info.
+ */
 class ErrorChecker {
+
+    //Checks to see if there are any errors during shader creation.
     public static void printShaderLog(int shader) {
         GL4 gl = (GL4) GLContext.getCurrentGL();
         int[] len = new int[1];
@@ -23,6 +35,7 @@ class ErrorChecker {
         }
     }
 
+    //Checks to see if there are any errors during program compilation
     public static void printProgramLog(int prog) {
         GL4 gl = (GL4) GLContext.getCurrentGL();
         int[] len = new int[1];
@@ -41,6 +54,7 @@ class ErrorChecker {
         }
     }
 
+    //Checks if there are any general errors with OpenGL
     public static boolean checkOpenGLError() {
         GL4 gl = (GL4) GLContext.getCurrentGL();
         boolean foundError = false;
@@ -53,6 +67,8 @@ class ErrorChecker {
         }
         return foundError;
     }
+
+    //Displays system info, including OpenGL version, vender, video card, JOGL version, and Java version.
     public static void displaySystemInfo() {
         GL4 gl = (GL4) GLContext.getCurrentGL();
         System.out.println("Open GL Info:");

@@ -1,10 +1,11 @@
 package a1;
 
-import com.jogamp.common.nio.Buffers;
-import com.jogamp.opengl.GL4;
-import com.jogamp.opengl.GLAutoDrawable;
-import com.jogamp.opengl.GLContext;
-import com.jogamp.opengl.GLEventListener;
+/*
+Michael Nguyen
+CSC 155
+Assignment 1
+ */
+
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.util.FPSAnimator;
 
@@ -12,25 +13,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.nio.FloatBuffer;
-import java.util.ArrayList;
-import java.util.Scanner;
 
+/*
+This class is responsible for displaying all the GUI required for the assignment. It implements a MouseWheelListener so
+scrolling the mouse wheel will zoom in and out.
+ */
 class Starter extends JFrame implements MouseWheelListener {
     private static final long serialVersionUID = 1L;
 
     private GLCanvas glCanvas;
     private JButton verticalMovement, circularMovement;
 
-    private StarterModel starterModel;
+    private StarterModel starterModel; //where all the logic occurs
 
     private Starter() {
         initGUI();
         initKeyBindingsAndWheel();
-        addButtonListeners();
-        FPSAnimator animator = new FPSAnimator(glCanvas, 60);
+        addListeners();
+        FPSAnimator animator = new FPSAnimator(glCanvas, 60); //to allow for animation
         animator.start();
     }
 
@@ -38,6 +38,10 @@ class Starter extends JFrame implements MouseWheelListener {
         new Starter();
     }
 
+    /*
+    Initializes the glCanvas, adds the model class, which implements GLEventListener, to it, adds the buttons to the
+    JPanel, and sets various settings for the JFrame.
+     */
     private void initGUI() {
         setLayout(new BorderLayout());
 
@@ -45,9 +49,7 @@ class Starter extends JFrame implements MouseWheelListener {
         glCanvas.addGLEventListener(starterModel = new StarterModel());
         getContentPane().add(glCanvas, BorderLayout.CENTER);
 
-        this.addMouseWheelListener(this);
-
-        JPanel buttonPanel = new JPanel();
+        JPanel buttonPanel = new JPanel(); //to allow for easier formatting of the two buttons
         verticalMovement = new JButton("Vertical Movement");
         circularMovement = new JButton("Circular Movement");
         buttonPanel.add(verticalMovement);
@@ -62,6 +64,10 @@ class Starter extends JFrame implements MouseWheelListener {
         setVisible(true);
     }
 
+    /*
+    Initializes and adds the command to change the color of the triangle from a solid color to a gradient of three
+    colors.
+     */
     private void initKeyBindingsAndWheel() {
         ColorCommand colorCommand = new ColorCommand(starterModel);
         InputMap iMap = ((JPanel) getContentPane()).getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
@@ -71,19 +77,26 @@ class Starter extends JFrame implements MouseWheelListener {
         actionMap.put("color", colorCommand);
     }
 
-    private void addButtonListeners() {
+    /*
+    Adds the ActionListeners to the two JButtons, which flips flags for vertical and circular movement in the model
+    class. Also adds the MouseWheelListener to the JFrame.
+     */
+    private void addListeners() {
         verticalMovement.addActionListener(e -> {
             starterModel.setVerticalMovement(!starterModel.isVerticalMovement());
             starterModel.setCircularMovement(false);
         });
         circularMovement.addActionListener(e -> {
-            starterModel.setCircularMovement(!starterModel.isVerticalMovement());
+            starterModel.setCircularMovement(!starterModel.isCircularMovement());
             starterModel.setVerticalMovement(false);
         });
+        this.addMouseWheelListener(this);
     }
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
+        int notches = e.getWheelRotation();
+        starterModel.setZoomAmount(starterModel.getZoomAmount() + (0.25f * notches));
 
     }
 }
